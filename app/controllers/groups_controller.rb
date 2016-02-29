@@ -43,6 +43,7 @@ class GroupsController < ApplicationController
 	def leave_group
 		# incoming id is the group id
 		Join.where(user_id:session[:user_id], group_id:params[:id]).destroy_all
+		Group.find(params[:id]).decrement!(:member_count)
 		redirect_to '/users/%d' % session[:user_id]
 	end
 
