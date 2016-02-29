@@ -1,0 +1,96 @@
+<head>
+	<style>
+		#container{
+			width: 600px;
+			margin: 0 auto;
+		}
+		form{
+			margin-bottom: 10px;
+		}
+		a{
+			color: red;
+		}
+		h4{
+			text-decoration: underline;
+		}
+	</style>
+</head>
+
+
+
+	<!-- Show current logged in user -->
+	<div>
+	<h1>Hi <%= @user.first_name %> <%= @user.last_name %>!</h1>
+	<a href="/sessions" data-method='delete' >Log Out</a> 
+	</div>
+
+
+	<!-- List of Group Names Here -->
+<div class="col-md-6">
+	<h4>Here are the organizations you may join:</h4>
+	<% @show_groups.each do |x| %>
+
+	<!-- When user clicks on group name link, send the id of that group name to controller -->
+	<h5><a href="/groups/<%= x.id %>"><%= x.group_name %></a></h5>
+	<h6>Member Count: <%= x.member_count %><h6>
+	<h6><%= x.description %><h6>
+		<% if @user.first_name == x.founder %>
+			<a href="/groups/<%= x.id %>" data-method='delete' class="btn btn-info" role="button" >Log Out</a>
+				
+		<% end %>
+
+	<% end %>
+</div>
+
+
+
+
+
+	<!-- Create your group here -->
+<div class="col-md-3">
+	<h4>Create a new organization</h4>
+	<form action='/groups' method='post'>	
+
+		<input name='authenticity_token' value="<%=form_authenticity_token %>" type="hidden">
+
+		<h6>Organization Name</h6>
+		<input type='text' name='org_name' id='org_name'>
+
+		<h6>Description:</h6>
+		<textarea rows="4" cols="30" name="description"></textarea>
+
+		
+
+
+
+
+
+		
+		<div>
+		<button type="submit" class="btn btn-primary">Create your group!</button>
+		</div>
+
+	</form>
+</div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
